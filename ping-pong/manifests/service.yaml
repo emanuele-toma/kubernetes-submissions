@@ -7,21 +7,11 @@ spec:
   selector:
     app: ping-pong
   ports:
-    - protocol: TCP
+    - name: ping-port
+      protocol: TCP
       port: 3456
-      targetPort: 3000
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: log-output-svc
-spec:
-  type: ClusterIP
-  selector:
-    app: log-output
-  ports:
-    - protocol: TCP
+      targetPort: 3456
+    - name: log-port
+      protocol: TCP
       port: 2345
-      targetPort: 3000
+      targetPort: 2345

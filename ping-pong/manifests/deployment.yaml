@@ -7,33 +7,33 @@ spec:
   selector:
     matchLabels:
       app: ping-pong
+
   template:
     metadata:
       labels:
         app: ping-pong
     spec:
+      volumes:
+        - name: ping-log
+          persistentVolumeClaim:
+            claimName: ping-log-claim
       containers:
         - name: ping-pong
           image: emanueletoma/kubernetes:ping-pong
           imagePullPolicy: Always
+          volumeMounts:
+            - name: ping-log
+              mountPath: /data
+          env:
+            - name: PORT
+              value: "3456"
 
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: log-output
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: log-output
-  template:
-    metadata:
-      labels:
-        app: log-output
-    spec:
-      containers:
         - name: log-output
           image: emanueletoma/kubernetes:log-output
           imagePullPolicy: Always
+          volumeMounts:
+            - name: ping-log
+              mountPath: /data
+          env:
+            - name: PORT
+              value: "2345"
