@@ -1,18 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ping-pong
+  name: log-output
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ping-pong
+      app: log-output
   template:
     metadata:
       labels:
-        app: ping-pong
+        app: log-output
     spec:
+      volumes:
+        - name: log-output-volume
+          emptyDir: {}
       containers:
-        - name: ping-pong
-          image: emanueletoma/kubernetes:ping-pong
+        - name: log-output-writer
+          image: emanueletoma/kubernetes:log-output
           imagePullPolicy: Always
+          env:
+            - name: WRITER
+              value: "true"
+          volumeMounts:
+            - name: log-output-volume
+              mountPath: /data
+              
+        - name: log-output-reader
+          image: emanueletoma/kubernetes:log-output
+          imagePullPolicy: Always
+          env:
+            - name: WRITER
+              value: "false"
+          volumeMounts:
+            - name: log-output-volume
+              mountPath: /data
