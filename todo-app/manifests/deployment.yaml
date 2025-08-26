@@ -7,12 +7,20 @@ spec:
   selector:
     matchLabels:
       app: todo-app
+      
   template:
     metadata:
       labels:
         app: todo-app
     spec:
+      volumes:
+        - name: todo-app-volume
+          persistentVolumeClaim:
+            claimName: todo-app-claim
       containers:
         - name: todo-app
           image: emanueletoma/kubernetes:todo-app
           imagePullPolicy: Always
+          volumeMounts:
+            - name: todo-app-volume
+              mountPath: /data
