@@ -6,9 +6,20 @@
     <title>Document</title>
   </head>
   <body>
-    <div style="display: flex; flex-direction: column;">
+    <div style="display: flex; flex-direction: column; gap: 8px">
       Hello World!
       <img src="/image" alt="Random Image" width="400" />
+      <form>
+        <div style="display: flex; flex-direction: row; gap: 8px">
+          <input type="text" id="todoInput" placeholder="Enter a todo item" maxlength="140" />
+          <button type="submit">Create Todo</button>
+        </div>
+      </form>
+      <ul id="todoList">
+        <li>Learn JavaScript</li>
+        <li>Learn React</li>
+        <li>Build a project</li>
+      </ul>
     </div>
   </body>
 </html>
