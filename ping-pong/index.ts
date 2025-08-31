@@ -1,5 +1,4 @@
 import { Hono } from 'hono';
-import fs from 'fs';
 
 let counter = 0;
 
@@ -7,8 +6,11 @@ const app = new Hono();
 
 app.get('/pingpong', c => {
   counter++;
-  fs.writeFileSync('/data/pingpong.txt', counter.toString());
   return c.text(`Pong ${counter}`);
+});
+
+app.get('/pings', c => {
+  return c.text(counter.toString());
 });
 
 export default {

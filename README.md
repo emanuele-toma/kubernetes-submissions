@@ -15,3 +15,7 @@
 - [1.11](https://github.com/emanuele-toma/kubernetes-submissions/tree/1.11/ping-pong)
 - [1.12](https://github.com/emanuele-toma/kubernetes-submissions/tree/1.12/todo-app)
 - [1.13](https://github.com/emanuele-toma/kubernetes-submissions/tree/1.13/todo-app)
+
+## Chapter 2
+
+- [2.1](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.1/ping-pong)

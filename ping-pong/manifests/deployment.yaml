@@ -13,17 +13,10 @@ spec:
       labels:
         app: ping-pong
     spec:
-      volumes:
-        - name: ping-log
-          persistentVolumeClaim:
-            claimName: ping-log-claim
       containers:
         - name: ping-pong
           image: emanueletoma/kubernetes:ping-pong
           imagePullPolicy: Always
-          volumeMounts:
-            - name: ping-log
-              mountPath: /data
           env:
             - name: PORT
               value: "3456"
@@ -31,9 +24,6 @@ spec:
         - name: log-output
           image: emanueletoma/kubernetes:log-output
           imagePullPolicy: Always
-          volumeMounts:
-            - name: ping-log
-              mountPath: /data
           env:
             - name: PORT
               value: "2345"
