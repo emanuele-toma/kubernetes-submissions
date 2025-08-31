@@ -19,3 +19,4 @@
 ## Chapter 2
 
 - [2.1](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.1/ping-pong)
+- [2.2](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.2/todo-app)

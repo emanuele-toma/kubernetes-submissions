@@ -21,6 +21,12 @@ spec:
         - name: todo-app
           image: emanueletoma/kubernetes:todo-app
           imagePullPolicy: Always
+
+        - name: todo-backend
+          image: emanueletoma/kubernetes:todo-backend
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4000
           volumeMounts:
             - name: todo-app-volume
               mountPath: /data
