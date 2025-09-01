@@ -1,15 +1,14 @@
 {
-  "name": "todo_app",
-  "module": "index.ts",
+  "name": "frontend",
   "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "hono": "^4.9.2"
+    "astro": "^5.13.5"
   }
 }

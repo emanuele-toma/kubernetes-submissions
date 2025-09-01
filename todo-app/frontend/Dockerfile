@@ -8,4 +8,8 @@ RUN bun install
 
 COPY . .
 
-CMD ["bun", "index.ts"]
+RUN bun run build
+
+ENV PORT=3000
+
+CMD ["sh", "-c", "bun run preview --port $PORT --host"]

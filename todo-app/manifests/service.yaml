@@ -10,10 +10,10 @@ spec:
   ports:
     - name: frontend
       protocol: TCP
-      port: 2345
-      targetPort: 3000
+      port: 7000
+      targetPort: 7000
 
     - name: backend
       protocol: TCP
-      port: 4000
-      targetPort: 4000
+      port: 8000
+      targetPort: 8000

@@ -10,13 +10,9 @@ type Todo = {
   createdAt: string;
 };
 
-let todos: Todo[] = [
-  { id: 1, text: 'Learn JavaScript', createdAt: new Date().toISOString() },
-  { id: 2, text: 'Learn React', createdAt: new Date().toISOString() },
-  { id: 3, text: 'Build a project', createdAt: new Date().toISOString() },
-];
+let todos: Todo[] = [];
 
-let nextId = 4;
+let nextId = 1;
 
 app.use(
   '*',

@@ -1,0 +1,76 @@
+---
+
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      Hello World!
+      <img id="randomImage" alt="Random Image" width="400" />
+      <form id="todoForm">
+        <div style="display: flex; flex-direction: row; gap: 8px">
+          <input type="text" id="todoInput" placeholder="Enter a todo item" maxlength="140" />
+          <button type="submit">Create Todo</button>
+        </div>
+      </form>
+      <ul id="todoList"></ul>
+    </div>
+
+    <script>
+      const backendUrl = import.meta.env.PUBLIC_BACKEND_URL || 'http://localhost:8081/api';
+
+			const randomImage = document.getElementById('randomImage') as HTMLImageElement;
+			if (randomImage) {
+				randomImage.src = `${backendUrl}/image`;
+			}
+
+      async function fetchTodos() {
+        try {
+          const res = await fetch(`${backendUrl}/todos`);
+          if (!res.ok) throw new Error('Failed to fetch');
+
+          const todos = await res.json();
+          const ul = document.getElementById('todoList');
+
+					if (!ul) throw new Error('No todoList element found');
+
+          ul.innerHTML = '';
+          todos.forEach((t: any) => {
+            const li = document.createElement('li');
+            li.textContent = t.text;
+            ul.appendChild(li);
+          });
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      document.getElementById('todoForm')?.addEventListener('submit', async ev => {
+        ev.preventDefault();
+        const input = document.getElementById('todoInput') as HTMLInputElement;
+        const text = input.value.trim();
+        if (!text) return;
+        try {
+          const res = await fetch(`${backendUrl}/todos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text }),
+          });
+          if (!res.ok) throw new Error('Failed to create todo');
+          input.value = '';
+          await fetchTodos();
+        } catch (e) {
+          console.error(e);
+        }
+      });
+
+      fetchTodos();
+    </script>
+  </body>
+</html>

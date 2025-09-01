@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: project
+  name: project-config
+  labels:
+    app: project
+data:
+  FRONTEND_PORT: "7000"
+  BACKEND_PORT: "8000"
+  BACKEND_URL: "http://localhost:8081/api"
