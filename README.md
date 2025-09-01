@@ -21,3 +21,4 @@
 - [2.1](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.1/ping-pong)
 - [2.2](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.2/todo-app)
 - [2.3](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.3/ping-pong)
+- [2.4](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.4/todo-app)
