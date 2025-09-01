@@ -1,6 +1,7 @@
 // @ts-check
 
 const express = require('express');
+const fs = require('fs');
 const random = btoa(Math.floor(Math.random() * 1_000_000_000).toString());
 
 setInterval(() => {
@@ -12,8 +13,15 @@ const app = express();
 
 app.get('/', async (req, res) => {
   const date = new Date();
+  const fileData = fs.readFileSync('/etc/config/information.txt', 'utf-8');
+  const envData = process.env.MESSAGE || 'no message';
   const data = await fetch('http://ping-pong-svc:3456/pings').then(r => r.text());
-  return res.send(`${date.toISOString()}: ${random}.\nPing / Pongs: ${data}`);
+  return res.send(
+    `file content: ${fileData}
+env variable: MESSAGE=${envData}
+${date.toISOString()}: ${random}.
+Ping / Pongs: ${data}`
+  );
 });
 
 app.listen(process.env.PORT || 3000, () => {
