@@ -8,4 +8,8 @@ RUN bun install
 
 COPY . .
 
+ENTRYPOINT [ "/app/entrypoint.sh" ]
+
+RUN chmod +x /app/entrypoint.sh
+
 CMD [ "bun", "index.ts" ]

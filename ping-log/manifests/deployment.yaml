@@ -21,6 +21,8 @@ spec:
           env:
             - name: PORT
               value: "3456"
+            - name: DATABASE_URL
+              value: "postgresql://admin:password@postgres-svc:5432/pinglogdb"
 
         - name: log-output
           image: emanueletoma/kubernetes:log-output

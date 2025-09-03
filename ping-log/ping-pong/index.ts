@@ -1,16 +1,29 @@
 import { Hono } from 'hono';
+import { PrismaClient } from './generated/prisma';
 
-let counter = 0;
 
 const app = new Hono();
 
-app.get('/pingpong', c => {
-  counter++;
-  return c.text(`Pong ${counter}`);
+app.get('/pingpong', async c => {
+  const db = new PrismaClient();
+
+  // check if there is a record in the database
+  let counter = await db.counter.findFirst({ where: { id: 1 } });
+
+  if (counter) {
+    counter.count++;
+    counter = await db.counter.update({ where: { id: 1 }, data: { count: counter.count } });
+  } else {
+    counter = await db.counter.create({ data: { id: 1, count: 1 } });
+  }
+
+  return c.text(`Pong ${counter.count}`);
 });
 
-app.get('/pings', c => {
-  return c.text(counter.toString());
+app.get('/pings', async c => {
+  const db = new PrismaClient();
+  const counter = await db.counter.findFirst({ where: { id: 1 } });
+  return c.text(counter ? counter.count.toString() : '0');
 });
 
 export default {
