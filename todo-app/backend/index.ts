@@ -1,16 +1,11 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import fs from 'fs';
+import { PrismaClient } from './generated/prisma';
 
 const app = new Hono();
 
-type Todo = {
-  id: number;
-  text: string;
-  createdAt: string;
-};
-
-let todos: Todo[] = [];
+const prisma = new PrismaClient();
 
 let nextId = 1;
 
@@ -21,7 +16,8 @@ app.use(
   })
 );
 
-app.get('/api/todos', c => {
+app.get('/api/todos', async c => {
+  const todos = await prisma.todo.findMany();
   return c.json(todos);
 });
 
@@ -31,13 +27,12 @@ app.post('/api/todos', async c => {
     return c.json({ error: 'Invalid todo' }, 400);
   }
 
-  const todo: Todo = {
-    id: nextId++,
-    text: body.text.trim(),
-    createdAt: new Date().toISOString(),
-  };
+  const todo = await prisma.todo.create({
+    data: {
+      text: body.text.trim(),
+    },
+  });
 
-  todos.push(todo);
   return c.json(todo, 201);
 });
 

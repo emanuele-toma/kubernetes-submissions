@@ -25,3 +25,4 @@
 - [2.5](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.5/ping-log)
 - [2.6](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.6/todo-app)
 - [2.7](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.7/ping-log)
+- [2.8](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.8/todo-app)
