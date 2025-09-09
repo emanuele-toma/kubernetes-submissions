@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import fs from 'fs';
 import { PrismaClient } from './generated/prisma';
+import { logger } from 'hono/logger';
 
 const app = new Hono();
 
@@ -16,6 +17,8 @@ app.use(
   })
 );
 
+app.use(logger());
+
 app.get('/api/todos', async c => {
   const todos = await prisma.todo.findMany();
   return c.json(todos);
@@ -25,6 +28,10 @@ app.post('/api/todos', async c => {
   const body = await c.req.json().catch(() => null);
   if (!body || typeof body.text !== 'string' || body.text.trim() === '') {
     return c.json({ error: 'Invalid todo' }, 400);
+  }
+
+  if (body.text.length > 140) {
+    return c.json({ error: 'Todo is too long' }, 400);
   }
 
   const todo = await prisma.todo.create({
