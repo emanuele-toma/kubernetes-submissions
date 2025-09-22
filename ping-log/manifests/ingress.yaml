@@ -1,23 +1,14 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
 metadata:
-  name: ping-pong-ingress
+  name: ping-pong-gateway
   namespace: ping-log
 spec:
-  rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: ping-pong-svc
-            port:
-              number: 2345
-      - path: /pingpong
-        pathType: Prefix
-        backend:
-          service:
-            name: ping-pong-svc
-            port:
-              number: 3456
+  gatewayClassName: gke-l7-global-external-managed
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      kinds:
+      - kind: HTTPRoute

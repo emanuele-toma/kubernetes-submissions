@@ -30,5 +30,7 @@
 - [2.10](https://github.com/emanuele-toma/kubernetes-submissions/tree/2.10/todo-app)
 
 ## Chapter 3
+
 - [3.1](https://github.com/emanuele-toma/kubernetes-submissions/tree/3.1/ping-pong)
 - [3.2](https://github.com/emanuele-toma/kubernetes-submissions/tree/3.2/ping-pong)
+- [3.3](https://github.com/emanuele-toma/kubernetes-submissions/tree/3.3/ping-pong)
