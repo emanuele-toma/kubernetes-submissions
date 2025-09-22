@@ -1,12 +1,10 @@
 import { Hono } from 'hono';
 import { PrismaClient } from './generated/prisma';
 
-
 const app = new Hono();
 
-app.get('/', c => c.text('Hello'));
-
-app.get('/pingpong', async c => {
+// shared handler used by both / and /pingpong
+const pingpongHandler = async (c: any) => {
   const db = new PrismaClient();
 
   // check if there is a record in the database
@@ -20,7 +18,9 @@ app.get('/pingpong', async c => {
   }
 
   return c.text(`Pong ${counter.count}`);
-});
+};
+
+app.get('/', pingpongHandler);
 
 app.get('/pings', async c => {
   const db = new PrismaClient();
