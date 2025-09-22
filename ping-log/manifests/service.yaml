@@ -4,17 +4,17 @@ metadata:
   name: ping-pong-svc
   namespace: ping-log
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: ping-pong
   ports:
     - name: ping-port
       protocol: TCP
-      port: 3456
+      port: 80
       targetPort: 3456
     - name: log-port
       protocol: TCP
-      port: 2345
+      port: 8080
       targetPort: 2345
 
 ---
@@ -24,7 +24,7 @@ metadata:
   name: postgres-svc
   namespace: ping-log
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: postgres
   ports:
