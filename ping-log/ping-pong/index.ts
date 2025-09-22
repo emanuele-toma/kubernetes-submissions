@@ -4,6 +4,8 @@ import { PrismaClient } from './generated/prisma';
 
 const app = new Hono();
 
+app.get('/', c => c.text('Hello'));
+
 app.get('/pingpong', async c => {
   const db = new PrismaClient();
 
