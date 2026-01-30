@@ -41,8 +41,13 @@ jobs:
           project_id: '${{ env.PROJECT_ID }}'
           location: '${{ env.GKE_ZONE }}'
 
-      - name: 'Form image tags'
+      - name: 'Set namespace and image tags'
         run: |-
+          if [ "$BRANCH" = "main" ]; then
+            echo "NAMESPACE=project" >> $GITHUB_ENV
+          else
+            echo "NAMESPACE=$BRANCH" >> $GITHUB_ENV
+          fi
           echo "FRONTEND_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/todo-frontend:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
           echo "BACKEND_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/todo-backend:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
           echo "WIKICRON_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/wikicron:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
@@ -70,11 +75,12 @@ jobs:
 
       - name: Deploy
         run: |-
-          kubectl create namespace project --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create namespace $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
           cd todo-app
+          kustomize edit set namespace $NAMESPACE
           kustomize edit set image PROJECT/TODO-APP=$FRONTEND_TAG
           kustomize edit set image PROJECT/TODO-BACKEND=$BACKEND_TAG
           kustomize edit set image PROJECT/WIKICRON=$WIKICRON_TAG
           kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment/$DEPLOYMENT -n project
-          kubectl get services -o wide -n project
+          kubectl rollout status deployment/$DEPLOYMENT -n $NAMESPACE
+          kubectl get services -o wide -n $NAMESPACE
