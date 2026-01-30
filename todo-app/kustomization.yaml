@@ -5,7 +5,7 @@ resources:
   - manifests/namespace.yaml
 
   - manifests/configmap.yaml
-  - manifests/secrets.yaml
+  - manifests/secrets.example.yaml
 
   - volumes/persistentvolumeclaim.yaml
 
