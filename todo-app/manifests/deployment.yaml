@@ -20,7 +20,7 @@ spec:
             claimName: todo-app-claim
       containers:
         - name: todo-app
-          image: emanueletoma/kubernetes:todo-app
+          image: PROJECT/TODO-APP
           imagePullPolicy: Always
           env:
             - name: PORT
@@ -35,7 +35,7 @@ spec:
                   key: BACKEND_URL
 
         - name: todo-backend
-          image: emanueletoma/kubernetes:todo-backend
+          image: PROJECT/TODO-BACKEND
           imagePullPolicy: Always
           ports:
             - containerPort: 4000
